@@ -26,9 +26,25 @@ namespace Bliss.Core.Grayscale
 			}
 		}
 
+		public override void ApplyEqualizedHistogram(IHistogram histogram)
+		{
+			int row = 0;
+			int column = 0;
+			foreach (int value in histogram.EqualizedValues)
+			{
+				this.pixels[row, column] = new GrayscalePixel((byte)value);
+				column++;
+				if (column == Width)
+				{
+					row++;
+					column = 0;
+				}
+			}
+		}
+
 		public override IEnumerable<IHistogram> GetHistograms()
 		{
-			IntHistogram histogram = new IntHistogram("Grayscale");
+			IntHistogram histogram = new IntHistogram(this, "Grayscale");
 			foreach (GrayscalePixel pixel in this)
 			{
 				histogram.Add(pixel.Level);

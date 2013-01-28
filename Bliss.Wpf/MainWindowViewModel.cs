@@ -120,7 +120,8 @@ namespace Bliss.Wpf
 		private void OpenPicture()
 		{
 			OpenFileDialog dialog = new OpenFileDialog();
-			Environment.CurrentDirectory = @"C:\Users\svetlozar\Desktop\patriots";
+			
+			Environment.CurrentDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 			dialog.Filter = "Image Files(*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF|All files (*.*)|*.*";
 			bool? result = dialog.ShowDialog();
 			if (result.HasValue && result.Value)
@@ -135,7 +136,7 @@ namespace Bliss.Wpf
 			this.histograms.Clear();
 			foreach (var histogram in CurrentImage.Image.GetHistograms())
 			{
-				this.histograms.Add(new HistogramViewModel(histogram));
+				this.histograms.Add(new HistogramViewModel(this, histogram));
 			}
 		}
 

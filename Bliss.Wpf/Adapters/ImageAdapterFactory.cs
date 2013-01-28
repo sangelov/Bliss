@@ -1,4 +1,5 @@
 using System;
+using Bliss.Core;
 using Bliss.Core.Grayscale;
 using Bliss.Core.Rgb;
 
@@ -11,6 +12,15 @@ namespace Bliss.Wpf.Adapters
 			if (currentImage is RgbImageAdapter)
 			{
 				return new GrayscaleImageAdapter(new GrayscaleImage(currentImage.Image as RgbImage));
+			}
+			return null;
+		}
+
+		public static ImageAdapter CreateAdapter(IImage image)
+		{
+			if (image is GrayscaleImage)
+			{
+				return new GrayscaleImageAdapter(image as GrayscaleImage);
 			}
 			return null;
 		}

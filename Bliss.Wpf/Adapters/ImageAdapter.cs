@@ -1,9 +1,7 @@
 using System;
 using System.Linq;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Bliss.Core;
-using Bliss.Core.Grayscale;
 
 namespace Bliss.Wpf.Adapters
 {

@@ -22,7 +22,7 @@
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="240" />
 				<ColumnDefinition Width="*"/>
-				<ColumnDefinition  Width="240"/>
+				<ColumnDefinition  Width="480"/>
 			</Grid.ColumnDefinitions>
 			<TextBlock Text="Images:" />
 			<ListView Grid.Column="0" ItemsSource="{Binding Images}" Margin="5,25, 5, 5" SelectedItem="{Binding CurrentImage}">
@@ -62,8 +62,14 @@
                             </Grid.RowDefinitions>
                             <TextBlock Text="{Binding Title}" Grid.Row="0" />
                             <Border BorderThickness="1" BorderBrush="Black" Margin="5" Grid.Row="1" >
-                                    <Polygon Width="220" Height="80" Points="{Binding Points}" Stretch="Fill" Fill="{Binding Color}" Opacity="0.8" />
-                            </Border>
+								<Polygon Width="420" Height="80" Points="{Binding Points}" Stretch="Fill" Fill="{Binding Color}" Opacity="0.8">
+									<Polygon.ContextMenu>
+										<ContextMenu>
+											<MenuItem Header="Equalize Histogram" Command="{Binding EqualizeHistogramCommand}" />
+										</ContextMenu>
+									</Polygon.ContextMenu>
+								</Polygon>
+							</Border>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

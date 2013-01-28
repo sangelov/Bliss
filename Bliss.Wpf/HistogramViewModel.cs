@@ -1,6 +1,8 @@
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using Bliss.Core;
+using Bliss.Wpf.Adapters;
 
 namespace Bliss.Wpf
 {
@@ -8,17 +10,23 @@ namespace Bliss.Wpf
 	{
 		private readonly IHistogram histogram;
 		private readonly PointCollection points;
-
-		public HistogramViewModel(IHistogram histogram)
+		private readonly IImage image;
+		private readonly MainWindowViewModel mainViewModel;
+		
+		private ICommand equalizeHistogramCommand;
+		
+		public HistogramViewModel(MainWindowViewModel mainViewModel, IHistogram histogram)
 		{
+			this.mainViewModel = mainViewModel;
 			this.histogram = histogram;
+			this.image = histogram.Image;
 			this.points = new PointCollection();
 			
 			this.points.Add(new Point(0, histogram.Max));
 			int i = 0;
-			foreach(int value in histogram.Values)
+			foreach (int value in histogram.Values)
 			{
-				points.Add(new Point(i++, histogram.Max -value));
+				points.Add(new Point(i++, histogram.Max - value));
 			}
 			// last point (lower-right corner)
 			points.Add(new Point(i, histogram.Max));
@@ -62,6 +70,24 @@ namespace Bliss.Wpf
 					return new SolidColorBrush(Colors.Black);
 				}
 			}
+		}
+
+		public ICommand EqualizeHistogramCommand
+		{
+			get
+			{
+				if (this.equalizeHistogramCommand == null)
+				{
+					this.equalizeHistogramCommand = new DelegateCommand(EqualizeHistogram, () => true);
+				}
+				return this.equalizeHistogramCommand;
+			}
+		}
+
+		private void EqualizeHistogram()
+		{
+			this.image.ApplyEqualizedHistogram(histogram);
+			this.mainViewModel.CurrentImage = ImageAdapterFactory.CreateAdapter(this.image);
 		}
 	}
 }
