@@ -90,7 +90,7 @@ namespace Bliss.Core
 			for (int i = 0; i < this.values.Length; i++)
 			{
 				double up = cdf[i] - min;
-				double down = this.values.Length - min;
+				double down = (this.image.Width * this.image.Height) - min;
 				double equalized = (up / down) * 255;
 				this.equalizedValues[i] = (int)Math.Round(equalized, MidpointRounding.AwayFromZero);
 			}

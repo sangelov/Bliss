@@ -9,5 +9,9 @@ namespace Bliss.Core
 		IPixel[,] Pixels { get; }
 
 		IEnumerable<IHistogram> GetHistograms();
+
+		int Width { get; }
+
+		int Height { get; }
 	}
 }
