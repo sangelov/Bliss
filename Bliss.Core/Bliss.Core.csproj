@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="Grayscale\GrayscaleImage.cs" />
     <Compile Include="Grayscale\GrayscalePixel.cs" />
+    <Compile Include="Hsl\HslImage.cs" />
+    <Compile Include="Hsl\HslPixel.cs" />
     <Compile Include="IHistogram.cs" />
     <Compile Include="IImage.cs" />
     <Compile Include="Image.cs" />

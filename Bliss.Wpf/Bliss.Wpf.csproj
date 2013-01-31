@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Adapters\HslImageAdapter.cs" />
     <Compile Include="Adapters\GrayscaleImageAdapter.cs" />
     <Compile Include="Adapters\RgbImageAdapter.cs" />
     <Compile Include="App.xaml.cs">

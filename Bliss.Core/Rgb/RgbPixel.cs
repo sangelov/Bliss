@@ -12,5 +12,17 @@ namespace Bliss.Core.Rgb
 		public byte Blue { get; set; }
 
 		public byte Alpha { get; set; }
+
+		public RgbPixel(byte red, byte green, byte blue, byte alpha) : this()
+		{
+			this.Red = red;
+			this.Green = green;
+			this.Blue = blue;
+			this.Alpha = alpha;
+		}
+  
+		public RgbPixel(byte red, byte green, byte blue) : this(red, green, blue, 255)
+		{
+		}
 	}
 }

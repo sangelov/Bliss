@@ -9,6 +9,7 @@ namespace Bliss.Core
 
 		private int[] values;
 		private int[] equalizedValues;
+		private readonly int capacity;
 
 		public int Max { get; set; }
 
@@ -43,7 +44,13 @@ namespace Bliss.Core
 		}
 
 		public IntHistogram(IImage image, string title)
+			: this(image, title, 256)
+		{ 
+		}
+
+		public IntHistogram(IImage image, string title, int capacity)
 		{
+			this.capacity = capacity;
 			this.image = image;
 			Max = 0;
 			Title = title;
@@ -53,7 +60,7 @@ namespace Bliss.Core
 		{
 			if (this.values == null)
 			{
-				this.values = new int[256];
+				this.values = new int[this.capacity];
 			}
 
 			this.values[index]++;
@@ -91,7 +98,7 @@ namespace Bliss.Core
 			{
 				double up = cdf[i] - min;
 				double down = (this.image.Width * this.image.Height) - min;
-				double equalized = (up / down) * 255;
+				double equalized = (up / down) * (this.capacity - 1);
 				this.equalizedValues[i] = (int)Math.Round(equalized, MidpointRounding.AwayFromZero);
 			}
 		}
