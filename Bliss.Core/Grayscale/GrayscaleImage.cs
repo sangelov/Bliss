@@ -7,6 +7,17 @@ namespace Bliss.Core.Grayscale
 {
 	public class GrayscaleImage : Image, IImage
 	{
+		public GrayscaleImage(GrayscalePixel[,] pixels)
+		{
+			if (pixels == null)
+			{
+				throw new ArgumentNullException("pixels");
+			}
+
+			this.pixels = new IPixel[pixels.GetLength(0), pixels.GetLength(1)];
+			Array.Copy(pixels, this.pixels, pixels.GetLength(0) * pixels.GetLength(1));
+		}
+
 		public GrayscaleImage(RgbImage rgbImage)
 		{
 			if (rgbImage == null)
@@ -37,7 +48,6 @@ namespace Bliss.Core.Grayscale
 					int level = ((GrayscalePixel)this.pixels[row, column]).Level;
 					this.pixels[row, column] = new GrayscalePixel((byte)equalizedValues[level]);
 				}
-				
 			}
 		}
 

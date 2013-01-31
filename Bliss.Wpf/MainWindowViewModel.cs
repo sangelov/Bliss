@@ -2,6 +2,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using Bliss.Core.Grayscale;
+using Bliss.Core.Rgb;
 using Bliss.Wpf.Adapters;
 using Microsoft.Win32;
 
@@ -142,7 +144,8 @@ namespace Bliss.Wpf
 
 		private void ConvertToGrayscaleImage()
 		{
-			GrayscaleImageAdapter grayscaleImage = ImageAdapterFactory.CreateGrayscaleImageAdapter(CurrentImage);
+			GrayscaleImage grayscaImage = new GrayscaleImage(currentImage.Image as RgbImage);
+			ImageAdapter grayscaleImage = ImageAdapterFactory.CreateAdapter(grayscaImage);
 			if (grayscaleImage != null)
 			{
 				CurrentImage = grayscaleImage;
