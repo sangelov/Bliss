@@ -47,6 +47,7 @@
     <Compile Include="IHistogram.cs" />
     <Compile Include="IImage.cs" />
     <Compile Include="Image.cs" />
+    <Compile Include="PixelConverter.cs" />
     <Compile Include="IPixel.cs" />
     <Compile Include="IntHistogram.cs" />
     <Compile Include="Rgb\RgbImage.cs" />

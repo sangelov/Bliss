@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Bliss.Core.Rgb;
 
 namespace Bliss.Core.Hsl
 {
@@ -42,7 +43,14 @@ namespace Bliss.Core.Hsl
 			{
 				histogram.Add(pixel.NormalizedLuminance);
 			}
+
 			yield return histogram;
+
+			RgbImage rgbImage = this.ToRgbImage();
+			foreach (IHistogram rgbHistogram in rgbImage.GetHistograms())
+			{
+				yield return rgbHistogram;
+			}
 		}
 	}
 }
