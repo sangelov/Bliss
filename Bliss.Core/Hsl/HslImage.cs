@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Bliss.Core.Grayscale;
 using Bliss.Core.Rgb;
 
 namespace Bliss.Core.Hsl
@@ -50,6 +51,12 @@ namespace Bliss.Core.Hsl
 			foreach (IHistogram rgbHistogram in rgbImage.GetHistograms())
 			{
 				yield return rgbHistogram;
+			}
+
+			GrayscaleImage grayscaleImage = rgbImage.ToGrayscaleImage();
+			foreach (IHistogram grayscaleHistogram in grayscaleImage.GetHistograms())
+			{
+				yield return grayscaleHistogram;
 			}
 		}
 	}

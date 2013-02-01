@@ -65,6 +65,10 @@ namespace Bliss.Wpf
 				{
 					return new SolidColorBrush(Colors.Blue);
 				}
+				else if (title == "GRAYSCALE")
+				{
+					return new SolidColorBrush(Colors.Gray);
+				}
 				else
 				{
 					return new SolidColorBrush(Colors.Black);

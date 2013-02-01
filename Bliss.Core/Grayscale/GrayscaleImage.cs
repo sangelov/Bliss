@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bliss.Core.Rgb;
 
 namespace Bliss.Core.Grayscale
 {
@@ -16,25 +15,6 @@ namespace Bliss.Core.Grayscale
 
 			this.pixels = new IPixel[pixels.GetLength(0), pixels.GetLength(1)];
 			Array.Copy(pixels, this.pixels, pixels.GetLength(0) * pixels.GetLength(1));
-		}
-
-		public GrayscaleImage(RgbImage rgbImage)
-		{
-			if (rgbImage == null)
-			{
-				throw new ArgumentNullException("rgbImage", "RgbImage constructor can't be invoked with null");
-			}
-
-			this.pixels = new IPixel[rgbImage.Height, rgbImage.Width];
-			for (int i = 0; i < rgbImage.Width; i++)
-			{
-				for (int j = 0; j < rgbImage.Height; j++)
-				{
-					RgbPixel pixel = (RgbPixel)rgbImage.Pixels[j, i];
-					double value = (0.2125 * pixel.Red) + (0.7154 * pixel.Green) + (0.0721 * pixel.Blue);
-					this.pixels[j, i] = new GrayscalePixel(Convert.ToByte(value));
-				}
-			}
 		}
 
 		public override IImage ApplyEqualizedHistogram(IHistogram histogram)

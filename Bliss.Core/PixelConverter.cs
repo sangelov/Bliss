@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Bliss.Core.Grayscale;
 using Bliss.Core.Hsl;
 using Bliss.Core.Rgb;
 
@@ -20,6 +21,31 @@ namespace Bliss.Core
 				}
 			}
 			return new RgbImage(rgbPixels);
+		}
+		
+		public static GrayscaleImage ToGrayscaleImage(this RgbImage rgbImage)
+		{
+			if (rgbImage == null)
+			{
+				throw new ArgumentNullException("rgbImage", "RgbImage constructor can't be invoked with null");
+			}
+
+			GrayscalePixel[,] grayscalePixels = new GrayscalePixel[rgbImage.Height, rgbImage.Width];
+			for (int i = 0; i < rgbImage.Height; i++)
+			{
+				for (int j = 0; j < rgbImage.Width; j++)
+				{
+					RgbPixel rgbPixel = (RgbPixel)rgbImage.Pixels[i, j];
+					grayscalePixels[i, j] = rgbPixel.ToGrayscalePixel();
+				}
+			}
+			return new GrayscaleImage(grayscalePixels);
+		}
+
+		public static GrayscalePixel ToGrayscalePixel(this RgbPixel rgbPixel)
+		{
+			double grayLevel = (0.2125 * rgbPixel.Red) + (0.7154 * rgbPixel.Green) + (0.0721 * rgbPixel.Blue);
+			return new GrayscalePixel(Convert.ToByte(grayLevel));
 		}
 
 		public static HslPixel CreateHslPixelFromRgb(Byte r, Byte g, Byte b)
