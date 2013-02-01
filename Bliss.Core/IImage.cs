@@ -4,7 +4,7 @@ namespace Bliss.Core
 {
 	public interface IImage : IEnumerable<IPixel>
 	{
-		void ApplyEqualizedHistogram(IHistogram histogram);
+		IImage ApplyEqualizedHistogram(IHistogram histogram);
 
 		IPixel[,] Pixels { get; }
 

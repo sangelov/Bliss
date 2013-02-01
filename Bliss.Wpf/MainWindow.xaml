@@ -1,8 +1,11 @@
 ﻿<Window x:Class="Bliss.Wpf.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="600" Width="900">
+		xmlns:converters="clr-namespace:Bliss.Wpf.Converters"
+		Title="MainWindow" Height="600" Width="900">
 	<Window.Resources>
+		<converters:ObjectToVisibilityConverter x:Key="objectToVisibilityConverter" />
+		<converters:EnumerableToVisibilityConverter x:Key="enumerableToVisibilityConverter" />
 		<Style x:Key="BorderStyle" TargetType="{x:Type Border}">
 			<Setter Property="BorderThickness" Value="1,1,1,1" />
 			<Setter Property="CornerRadius" Value="8,8,8,8" />
@@ -20,12 +23,12 @@
 		</Menu>
 		<Grid>
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="240" />
+				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition Width="*"/>
-				<ColumnDefinition  Width="480"/>
+				<ColumnDefinition  Width="Auto"/>
 			</Grid.ColumnDefinitions>
 			<TextBlock Text="Images:" />
-			<ListView Grid.Column="0" ItemsSource="{Binding Images}" Margin="5,25, 5, 5" SelectedItem="{Binding CurrentImage}">
+			<ListView Grid.Column="0" ItemsSource="{Binding Images}" Margin="5,25, 5, 5" SelectedItem="{Binding CurrentImage}" Visibility="{Binding Images, Converter={StaticResource enumerableToVisibilityConverter}}">
 				<ListView.ItemTemplate>
 					<DataTemplate>
 						<Border Style="{StaticResource BorderStyle}">
@@ -41,11 +44,10 @@
 				</ListView.ItemTemplate>
 			</ListView>
 			<StackPanel Grid.Column="1" Orientation="Vertical">
-				<Border Style="{StaticResource BorderStyle}">
+				<Border Style="{StaticResource BorderStyle}" Visibility="{Binding CurrentImage, Converter={StaticResource objectToVisibilityConverter}}">
 					<Image Source="{Binding CurrentImage.Source}" Style="{StaticResource ImageStyle}">
 						<Image.ContextMenu>
 							<ContextMenu>
-								<MenuItem Header="Show Histograms" Command="{Binding ShowHistogramsCommand}" />
                                 <MenuItem Header="Show Grayscale" Command="{Binding ConvertToGrayscaleCommand}" />
 							</ContextMenu>
 						</Image.ContextMenu>
@@ -62,7 +64,7 @@
                             </Grid.RowDefinitions>
                             <TextBlock Text="{Binding Title}" Grid.Row="0" />
                             <Border BorderThickness="1" BorderBrush="Black" Margin="5" Grid.Row="1" >
-								<Polygon Width="420" Height="80" Points="{Binding Points}" Stretch="Fill" Fill="{Binding Color}" Opacity="0.8">
+								<Polygon Width="320" Height="80" Points="{Binding Points}" Stretch="Fill" Fill="{Binding Color}" Opacity="0.8">
 									<Polygon.ContextMenu>
 										<ContextMenu>
 											<MenuItem Header="Equalize Histogram" Command="{Binding EqualizeHistogramCommand}" />

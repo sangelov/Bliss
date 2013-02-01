@@ -17,7 +17,7 @@ namespace Bliss.Core.Rgb
 			Array.Copy(pixels, this.pixels, pixels.GetLength(0) * pixels.GetLength(1));
 		}
 
-		public override void ApplyEqualizedHistogram(IHistogram histogram)
+		public override IImage ApplyEqualizedHistogram(IHistogram histogram)
 		{
 			// TODO: Implement this method
 			throw new NotImplementedException();

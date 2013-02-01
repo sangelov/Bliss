@@ -17,9 +17,10 @@ namespace Bliss.Core.Hsl
 			Array.Copy(pixels, this.pixels, pixels.GetLength(0) * pixels.GetLength(1));
 		}
 
-		public override void ApplyEqualizedHistogram(IHistogram histogram)
+		public override IImage ApplyEqualizedHistogram(IHistogram histogram)
 		{
 			List<int> equalizedValues = new List<int>(histogram.EqualizedValues);
+			HslPixel[,] pixels = new HslPixel[this.Height, this.Width];
 
 			for (int row = 0; row < histogram.Image.Height; row++)
 			{
@@ -28,10 +29,10 @@ namespace Bliss.Core.Hsl
 					HslPixel pixel = ((HslPixel)this.pixels[row, column]);
 					
 					int oldValue = ((HslPixel)this.pixels[row, column]).NormalizedLuminance;
-					this.pixels[row, column] = new HslPixel(pixel.Hue, pixel.Saturation, (float)(equalizedValues[oldValue] / 100.0));
+					pixels[row, column] = new HslPixel(pixel.Hue, pixel.Saturation, (float)(equalizedValues[oldValue] / 100.0));
 				}
-
 			}
+			return new HslImage(pixels);
 		}
 
 		public override IEnumerable<IHistogram> GetHistograms()

@@ -14,8 +14,7 @@ namespace Bliss.Wpf
 		private readonly ObservableCollection<ImageAdapter> images;
 		private readonly ObservableCollection<HistogramViewModel> histograms;
 		private ICommand openPictureCommand;
-		private ICommand showHistogramsCommand;
-		private ICommand convertToGrayscaleCommand;
+		private DelegateCommand convertToGrayscaleCommand;
 		private ICommand removeImageCommand;
 
 		private ImageAdapter currentImage;
@@ -56,6 +55,8 @@ namespace Bliss.Wpf
 				{
 					this.currentImage = value;
 					OnPropertyChanged("CurrentImage");
+					ShowHistograms();
+					ConvertToGrayscaleCommand.RaiseCanExecuteChanged();
 				}
 			}
 		}
@@ -72,28 +73,21 @@ namespace Bliss.Wpf
 			}
 		}
 
-		public ICommand ShowHistogramsCommand
-		{
-			get
-			{
-				if (this.showHistogramsCommand == null)
-				{
-					this.showHistogramsCommand = new DelegateCommand(ShowHistograms, () => true);
-				}
-				return this.showHistogramsCommand;
-			}
-		}
-
-		public ICommand ConvertToGrayscaleCommand
+		public DelegateCommand ConvertToGrayscaleCommand
 		{
 			get
 			{
 				if (this.convertToGrayscaleCommand == null)
 				{
-					this.convertToGrayscaleCommand = new DelegateCommand(ConvertToGrayscaleImage, () => true);
+					this.convertToGrayscaleCommand = new DelegateCommand(ConvertToGrayscaleImage, CanConvertToGrayscale);
 				}
 				return this.convertToGrayscaleCommand;
 			}
+		}
+  
+		private bool CanConvertToGrayscale()
+		{
+			return !(CurrentImage.Image is GrayscaleImage);
 		}
 
 		public ICommand RemoveImageCommand
@@ -129,7 +123,8 @@ namespace Bliss.Wpf
 			if (result.HasValue && result.Value)
 			{
 				string path = dialog.FileName;
-				images.Add(ImageAdapterFactory.Create(path));
+				Images.Add(ImageAdapterFactory.Create(path));
+				OnPropertyChanged("Images");
 			}
 		}
 

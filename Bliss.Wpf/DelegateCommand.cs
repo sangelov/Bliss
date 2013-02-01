@@ -25,6 +25,15 @@ namespace Bliss.Wpf
 			this.canExecute = canExecute;
 		}
 
+		public void RaiseCanExecuteChanged()
+		{
+			EventHandler canExecuteChanged = CanExecuteChanged;
+			if (canExecuteChanged != null)
+			{
+				canExecuteChanged(this, EventArgs.Empty);
+			}
+		}
+
 		public void Execute(object parameter)
 		{
 			this.execute();

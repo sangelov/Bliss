@@ -65,6 +65,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Converters\EnumerableToVisibilityConverter.cs" />
+    <Compile Include="Converters\ObjectToVisibilityConverter.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="HistogramViewModel.cs" />
     <Compile Include="Adapters\ImageAdapter.cs" />

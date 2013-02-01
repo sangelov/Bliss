@@ -86,8 +86,8 @@ namespace Bliss.Wpf
 
 		private void EqualizeHistogram()
 		{
-			this.image.ApplyEqualizedHistogram(histogram);
-			this.mainViewModel.CurrentImage = ImageAdapterFactory.CreateAdapter(this.image);
+			IImage equalizedImage = this.image.ApplyEqualizedHistogram(histogram);
+			this.mainViewModel.CurrentImage = ImageAdapterFactory.CreateAdapter(equalizedImage);
 		}
 	}
 }

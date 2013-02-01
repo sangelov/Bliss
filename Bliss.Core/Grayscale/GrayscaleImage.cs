@@ -37,18 +37,20 @@ namespace Bliss.Core.Grayscale
 			}
 		}
 
-		public override void ApplyEqualizedHistogram(IHistogram histogram)
+		public override IImage ApplyEqualizedHistogram(IHistogram histogram)
 		{
 			List<int> equalizedValues = new List<int>(histogram.EqualizedValues);
+			GrayscalePixel[,] pixels = new GrayscalePixel[this.Height, this.Width];
 			
 			for (int row = 0; row < histogram.Image.Height; row++)
 			{
 				for (int column = 0; column < histogram.Image.Width; column++)
 				{
 					int level = ((GrayscalePixel)this.pixels[row, column]).Level;
-					this.pixels[row, column] = new GrayscalePixel((byte)equalizedValues[level]);
+					pixels[row, column] = new GrayscalePixel((byte)equalizedValues[level]);
 				}
 			}
+			return new GrayscaleImage(pixels);
 		}
 
 		public override IEnumerable<IHistogram> GetHistograms()

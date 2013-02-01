@@ -9,7 +9,7 @@ namespace Bliss.Core
 	{
 		protected IPixel[,] pixels;
 
-		public abstract void ApplyEqualizedHistogram(IHistogram histogram);
+		public abstract IImage ApplyEqualizedHistogram(IHistogram histogram);
 
 		public abstract IEnumerable<IHistogram> GetHistograms();
 
