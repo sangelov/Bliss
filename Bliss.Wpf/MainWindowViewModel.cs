@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using Bliss.Core.Grayscale;
 using Bliss.Core.Rgb;
@@ -13,7 +14,7 @@ namespace Bliss.Wpf
 	{
 		private readonly ObservableCollection<ImageAdapter> images;
 		private readonly ObservableCollection<HistogramViewModel> histograms;
-		private ICommand openPictureCommand;
+		private ICommand openImageCommand;
 		private DelegateCommand convertToGrayscaleCommand;
 		private ICommand removeImageCommand;
 
@@ -61,15 +62,15 @@ namespace Bliss.Wpf
 			}
 		}
   
-		public ICommand OpenPictureCommand
+		public ICommand OpenImageCommand
 		{
 			get
 			{
-				if (this.openPictureCommand == null)
+				if (this.openImageCommand == null)
 				{
-					this.openPictureCommand = new DelegateCommand(OpenPicture, () => true);
+					this.openImageCommand = new DelegateCommand(OpenImage, () => true);
 				}
-				return this.openPictureCommand;
+				return this.openImageCommand;
 			}
 		}
 
@@ -113,7 +114,7 @@ namespace Bliss.Wpf
 		}
 
 		// TODO: refactor this, showing a FileChooserDialog from a view model is plain wrong!!!
-		private void OpenPicture()
+		private void OpenImage()
 		{
 			OpenFileDialog dialog = new OpenFileDialog();
 			
@@ -124,6 +125,10 @@ namespace Bliss.Wpf
 			{
 				string path = dialog.FileName;
 				Images.Add(ImageAdapterFactory.Create(path));
+				if (Images.Count == 1)
+				{
+					CurrentImage = Images.First();
+				}
 				OnPropertyChanged("Images");
 			}
 		}
